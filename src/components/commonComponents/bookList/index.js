@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import map from "lodash/map";
+import { Link } from "react-router-dom";
+import { Route } from "react-router-dom";
+import  BookDetails  from '../../pages/bookDetailsPage'
 
 class BookList extends Component {
-  getListItem;
-
-  getListItem = (book,i) => {
+  getListItem = (book, i) => {
     return (
       <li key={i}>
         <div className="book">
@@ -33,6 +34,16 @@ class BookList extends Component {
               {item}
             </div>
           ))}
+          <div>
+          <Route exact path="/book-details" render={() => (
+            <BookDetails
+            // contacts={this.state.contacts}
+            // onDeleteContact={this.removeContact}
+          />
+        )} />
+
+            <Link to="/create">View Book</Link>
+          </div>
         </div>
       </li>
     );
@@ -46,7 +57,7 @@ class BookList extends Component {
       <div>
         <div className="bookshelf-books">
           <ol className="books-grid">
-            {map(bookList, (item ) => {
+            {map(bookList, (item) => {
               return this.getListItem(item);
             })}
           </ol>

@@ -141,6 +141,7 @@ button:active {
 
 .book {
   width: 140px;
+  cursor: pointer;
 }
 
 .book-title,
