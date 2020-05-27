@@ -57,9 +57,18 @@ class BookList extends Component {
       <div>
         <div className="bookshelf-books">
           <ol className="books-grid">
-            {map(bookList, (item) => {
-              return this.getListItem(item);
-            })}
+
+            {bookList.length <= 0 ?
+                <div>
+                  Shelf is empty.  
+              </div>
+               
+               : 
+               map(bookList, (item) => {
+                return this.getListItem(item);
+              })
+          }
+          
           </ol>
         </div>
       </div>
