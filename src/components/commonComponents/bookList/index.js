@@ -2,12 +2,17 @@ import React, { Component } from "react";
 import map from "lodash/map";
 import { Link } from "react-router-dom";
 import { Route } from "react-router-dom";
-import  BookDetails  from '../../pages/bookDetailsPage'
+import BookDetails from "../../pages/bookDetailsPage";
 
 class BookList extends Component {
-  getListItem = (book, i) => {
+  handleBookShelfChange = (shelf, book) => {
+    this.props.handleChange(shelf, book);
+  };
+
+  getListItem = (book) => {
+    // console.log(book)
     return (
-      <li key={i}>
+      <li key={book.id}>
         <div className="book">
           <div className="book-top">
             <img
@@ -17,7 +22,12 @@ class BookList extends Component {
               width="128"
             />
             <div className="book-shelf-changer">
-              <select>
+              <select
+                value={book.shelf}
+                onChange={(event) =>
+                  this.handleBookShelfChange(event.target.value, book)
+                }
+              >
                 <option value="move" disabled>
                   Move to...
                 </option>
@@ -35,12 +45,15 @@ class BookList extends Component {
             </div>
           ))}
           <div>
-          <Route exact path="/book-details" render={() => (
-            <BookDetails
-            // contacts={this.state.contacts}
-            // onDeleteContact={this.removeContact}
-          />
-        )} />
+            <Route
+              path="/book-details"
+              render={() => (
+                <BookDetails
+                // contacts={this.state.contacts}
+                // onDeleteContact={this.removeContact}
+                />
+              )}
+            />
 
             <Link to="/create">View Book</Link>
           </div>
@@ -50,25 +63,20 @@ class BookList extends Component {
   };
 
   render() {
-    const { bookList } = this.props;
-    // console.log(this.props);
+    const { bookList, handleChange } = this.props;
+    console.log(this.props);
 
     return (
       <div>
         <div className="bookshelf-books">
           <ol className="books-grid">
-
-            {bookList.length <= 0 ?
-                <div>
-                  Shelf is empty.  
-              </div>
-               
-               : 
-               map(bookList, (item) => {
+            {bookList.length <= 0 ? (
+              <div>Shelf is empty.</div>
+            ) : (
+              map(bookList, (item) => {
                 return this.getListItem(item);
               })
-          }
-          
+            )}
           </ol>
         </div>
       </div>

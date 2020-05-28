@@ -1,7 +1,9 @@
 import React from "react";
 import "./App.css";
-import HomePageContainer from './components/pages/homePageContainer'
-import searchPageContainer from './components/pages/searchPageContainer'
+import HomePageContainer from "./components/pages/homePageContainer";
+import searchPageContainer from "./components/pages/searchPageContainer";
+import { Link, Route, Switch } from "react-router-dom";
+import BookDetailsContainer from "./components/pages/homePageContainer";
 
 class BooksApp extends React.Component {
   state = {
@@ -17,6 +19,9 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
+        {/* <Route exact={true} path="/" component={Home} /> */}
+        {/* <Route path="/book-details" component={BookDetailsContainer} /> */}
+
         {this.state.showSearchPage ? (
           <searchPageContainer />
         ) : (
