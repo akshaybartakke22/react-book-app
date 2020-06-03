@@ -1,16 +1,11 @@
 import React, { Component } from "react";
-import BookList from "../../commonComponents/bookList";
+import BookList from "../../commonComponents/BookList";
 import * as BooksAPI from "../../../BooksAPI";
 import * as ShelfStatusConstants from "../../../constants/BookListContstants";
+import { Link } from "react-router-dom";
 
 class HomePageContainer extends Component {
   state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
     showSearchPage: false,
     currentlyReadingArry: [],
     wantToReadArry: [],
@@ -45,8 +40,6 @@ class HomePageContainer extends Component {
       }
     });
   };
-
- 
 
   render() {
     const { currentlyReadingArry, wantToReadArry, readArry } = this.state;
@@ -83,9 +76,9 @@ class HomePageContainer extends Component {
             </div>
           </div>
           <div className="open-search">
-            <button onClick={() => this.setState({ showSearchPage: true })}>
-              Add a book
-            </button>
+            <Link to="/search">
+              <button>Add a book</button>
+            </Link>
           </div>
         </div>
       </div>

@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 import map from "lodash/map";
-import { Link } from "react-router-dom";
-import { Route } from "react-router-dom";
-import BookDetails from "../../pages/bookDetailsPage";
 
 class BookList extends Component {
   handleBookShelfChange = (shelf, book) => {
@@ -10,12 +7,12 @@ class BookList extends Component {
   };
 
   getListItem = (book) => {
-    // console.log(book)
     return (
       <li key={book.id}>
         <div className="book">
           <div className="book-top">
             <img
+              alt="book-title"
               className="book-cover"
               src={book.imageLinks.smallThumbnail}
               height="193"
@@ -38,24 +35,9 @@ class BookList extends Component {
               </select>
             </div>
           </div>
-          <div className="book-title">{book.title}</div>
-          {book.authors.map((item, i) => (
-            <div className="book-authors" key={i}>
-              {item}
-            </div>
-          ))}
-          <div>
-            <Route
-              path="/book-details"
-              render={() => (
-                <BookDetails
-                // contacts={this.state.contacts}
-                // onDeleteContact={this.removeContact}
-                />
-              )}
-            />
-
-            <Link to="/create">View Book</Link>
+          <div className="book-title">{book.title ? book.title : null}</div>
+          <div className="book-authors">
+            {book.authors ? book.authors.join(",") : null}
           </div>
         </div>
       </li>
@@ -63,7 +45,7 @@ class BookList extends Component {
   };
 
   render() {
-    const { bookList, handleChange } = this.props;
+    const { bookList } = this.props;
     console.log(this.props);
 
     return (
