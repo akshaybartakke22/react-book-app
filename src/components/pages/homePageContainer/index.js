@@ -1,49 +1,24 @@
 import React, { Component } from "react";
 import BookList from "../../commonComponents/BookList";
-import * as BooksAPI from "../../../BooksAPI";
-import * as ShelfStatusConstants from "../../../constants/BookListContstants";
 import { Link } from "react-router-dom";
 
 class HomePageContainer extends Component {
-  state = {
-    showSearchPage: false,
-    currentlyReadingArry: [],
-    wantToReadArry: [],
-    readArry: [],
-  };
-
-  getAllBooks = () => {
-    // get all books and create shelfs for books
-    BooksAPI.getAll().then((response) => {
-      this.setState({
-        readArry: response.filter(
-          (res) => res.shelf === ShelfStatusConstants.read
-        ),
-        currentlyReadingArry: response.filter(
-          (res) => res.shelf === ShelfStatusConstants.currentlyReading
-        ),
-        wantToReadArry: response.filter(
-          (res) => res.shelf === ShelfStatusConstants.wantToReadArray
-        ),
-      });
-    });
+  changeBookShelf = (shelf, book) => {
+    //update book Shelf and called all books api
+    this.props.changeShelf(shelf, book);
   };
 
   componentDidMount = () => {
-    this.getAllBooks();
-  };
-
-  changeBookShelf = (shelf, book) => {
-    //update book Shelf and called all books api
-    BooksAPI.update(book, shelf).then((response) => {
-      if (response) {
-        this.getAllBooks();
-      }
-    });
+    this.props.getAllBooks();
   };
 
   render() {
-    const { currentlyReadingArry, wantToReadArry, readArry } = this.state;
+    const { books } = this.props;
+    const Bookshelf = [
+      { title: "Currently Reading", shelf_type: "currentlyReading" },
+      { title: "Want to Read", shelf_type: "wantToRead" },
+      { title: "Read", shelf_type: "read" },
+    ];
 
     return (
       <div>
@@ -52,29 +27,22 @@ class HomePageContainer extends Component {
             <h1>MyReads</h1>
           </div>
           <div className="list-books-content">
-            <div>
-              <div className="bookshelf">
-                <h2 className="bookshelf-title">Currently Reading</h2>
-                <BookList
-                  bookList={currentlyReadingArry}
-                  handleChange={this.changeBookShelf}
-                />
-              </div>
-              <div className="bookshelf">
-                <h2 className="bookshelf-title">Want to Read</h2>
-                <BookList
-                  bookList={wantToReadArry}
-                  handleChange={this.changeBookShelf}
-                />
-              </div>
-              <div className="bookshelf">
-                <h2 className="bookshelf-title">Read</h2>
-                <BookList
-                  bookList={readArry}
-                  handleChange={this.changeBookShelf}
-                />
-              </div>
-            </div>
+            {Bookshelf.map((shelf, index) => {
+              const bookShelf = books.filter(
+                (book) => book.shelf === shelf.shelf_type
+              );
+              return (
+                <div className="bookshelf" key={index}>
+                  <h2 className="bookshelf-title">{shelf.title}</h2>
+                  <div className="bookshelf-books">
+                    <BookList
+                      bookList={bookShelf}
+                      handleChange={this.changeBookShelf}
+                    />
+                  </div>
+                </div>
+              );
+            })}
           </div>
           <div className="open-search">
             <Link to="/search">

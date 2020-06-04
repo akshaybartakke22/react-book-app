@@ -2,20 +2,16 @@ import React, { Component } from "react";
 import * as BooksAPI from "../../../BooksAPI";
 import BookList from "../../commonComponents/BookList";
 import { Link } from "react-router-dom";
+import { createHashHistory } from "history";
+import { withRouter } from "react-router-dom";
+
+export const history = createHashHistory();
 
 class SearchPageContainer extends Component {
   state = {
-    books: [],
-    currentBooks: [],
+    searchBooks: [],
     redirect: null,
   };
-
-  componentDidMount() {
-    BooksAPI.getAll().then((books) => {
-      const booksId = books.map((book) => ({ id: book.id, shelf: book.shelf }));
-      this.setState({ currentBooks: booksId });
-    });
-  }
 
   changeBookShelf = (shelf, book) => {
     BooksAPI.update(book, shelf).then((response) => {
@@ -31,17 +27,19 @@ class SearchPageContainer extends Component {
     if (value) {
       BooksAPI.search(value).then((books) => {
         if (!books || books.hasOwnProperty("error")) {
-          this.setState({ books: [] });
+          this.setState({ searchBooks: [] });
         } else {
-          this.setState({ books: books });
+          this.setState({ searchBooks: books });
         }
       });
     } else {
-      this.setState({ books: [] });
+      this.setState({ searchBooks: [] });
     }
   };
 
   render() {
+    const { books } = this.props;
+
     return (
       <div>
         <div className="search-books">
@@ -49,7 +47,6 @@ class SearchPageContainer extends Component {
             <Link to="/">
               <button
                 className="close-search"
-                onClick={() => this.setState({ showSearchPage: false })}
               />
             </Link>
             <div className="search-books-input-wrapper">
@@ -63,7 +60,8 @@ class SearchPageContainer extends Component {
           <div className="search-books-results">
             <ol className="books-grid">
               <BookList
-                bookList={this.state.books}
+                books={books}
+                bookList={this.state.searchBooks}
                 handleChange={this.changeBookShelf}
               />
             </ol>
@@ -74,4 +72,4 @@ class SearchPageContainer extends Component {
   }
 }
 
-export default SearchPageContainer;
+export default withRouter(SearchPageContainer);

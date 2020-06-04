@@ -7,6 +7,19 @@ class BookList extends Component {
   };
 
   getListItem = (book) => {
+    // set current shelf to none as default
+    let currentShelf = "none";
+
+    // if book is in current list, set current shelf to book.shelf
+    if (this.props.books) {
+      for (let item of this.props.books) {
+        if (item.id === book.id) {
+          currentShelf = item.shelf;
+          break;
+        }
+      }
+    }
+
     return (
       <li key={book.id}>
         <div className="book">
@@ -17,13 +30,15 @@ class BookList extends Component {
                 width: 128,
                 height: 193,
                 backgroundImage: `url(${
-                  book.imageLinks ? book.imageLinks.thumbnail : '../images/no_cover.gif'
+                  book.imageLinks
+                    ? book.imageLinks.thumbnail
+                    : "../images/no_cover.gif"
                 })`,
               }}
             />
             <div className="book-shelf-changer">
               <select
-                value={book.shelf ? book.shelf : ''}
+                value={book.shelf ? book.shelf : currentShelf}
                 onChange={(event) =>
                   this.handleBookShelfChange(event.target.value, book)
                 }
@@ -55,7 +70,7 @@ class BookList extends Component {
         <div className="bookshelf-books">
           <ol className="books-grid">
             {bookList.length <= 0 ? (
-              <div>Shelf is empty.</div>
+              <div>Books not found.</div>
             ) : (
               map(bookList, (item) => {
                 return this.getListItem(item);
