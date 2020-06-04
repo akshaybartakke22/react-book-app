@@ -1,7 +1,7 @@
 # reactnd-myreads
 
 >My Reads App
-This app provides functionality for to maintain book status as shelf
+This app provides functionality to maintain book status as shelf
 
 ## Getting Started to the Project by: 
 
