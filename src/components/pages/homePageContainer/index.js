@@ -13,6 +13,7 @@ class HomePageContainer extends Component {
   };
 
   getAllBooks = () => {
+    // get all books and create shelfs for books
     BooksAPI.getAll().then((response) => {
       this.setState({
         readArry: response.filter(
@@ -33,9 +34,9 @@ class HomePageContainer extends Component {
   };
 
   changeBookShelf = (shelf, book) => {
+    //update book Shelf and called all books api
     BooksAPI.update(book, shelf).then((response) => {
       if (response) {
-        // console.log(response);
         this.getAllBooks();
       }
     });

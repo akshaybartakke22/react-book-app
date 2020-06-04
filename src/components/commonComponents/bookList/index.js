@@ -11,16 +11,19 @@ class BookList extends Component {
       <li key={book.id}>
         <div className="book">
           <div className="book-top">
-            <img
-              alt="book-title"
+            <div
               className="book-cover"
-              src={book.imageLinks.smallThumbnail}
-              height="193"
-              width="128"
+              style={{
+                width: 128,
+                height: 193,
+                backgroundImage: `url(${
+                  book.imageLinks ? book.imageLinks.thumbnail : '../images/no_cover.gif'
+                })`,
+              }}
             />
             <div className="book-shelf-changer">
               <select
-                value={book.shelf}
+                value={book.shelf ? book.shelf : ''}
                 onChange={(event) =>
                   this.handleBookShelfChange(event.target.value, book)
                 }
@@ -46,7 +49,6 @@ class BookList extends Component {
 
   render() {
     const { bookList } = this.props;
-    console.log(this.props);
 
     return (
       <div>

@@ -3,7 +3,7 @@ import * as BooksAPI from "../../../BooksAPI";
 import BookList from "../../commonComponents/BookList";
 import { Link } from "react-router-dom";
 
-class searchPageContainer extends Component {
+class SearchPageContainer extends Component {
   state = {
     books: [],
     currentBooks: [],
@@ -12,7 +12,6 @@ class searchPageContainer extends Component {
 
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
-      // Get rid of all other properties except book id
       const booksId = books.map((book) => ({ id: book.id, shelf: book.shelf }));
       this.setState({ currentBooks: booksId });
     });
@@ -27,8 +26,8 @@ class searchPageContainer extends Component {
   };
 
   onSearch = (event) => {
+    //called search book api to search books
     const value = event.target.value;
-    console.log(value);
     if (value) {
       BooksAPI.search(value).then((books) => {
         if (!books || books.hasOwnProperty("error")) {
@@ -75,4 +74,4 @@ class searchPageContainer extends Component {
   }
 }
 
-export default searchPageContainer;
+export default SearchPageContainer;
