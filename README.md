@@ -1,23 +1,24 @@
 # reactnd-myreads
 
-> Udacity React Nanodegree - Project 1
+>My Reads App
+This app provides functionality for to maintain book status as shelf
 
-## Getting Started
+## Getting Started to the Project by: 
 
-### Setup
+### Basic Setup
 
 ```
 $git clone https://github.com/akshaybartakke22/react-book-app.git
 $cd react-book-app
 ```
 
-### Install
+### To Install all the packages
 
 ```
 $npm install
 ```
 
-### Run
+### To run react-book-app application
 
 ```
 $ npm start
