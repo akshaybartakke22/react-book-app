@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import * as BooksAPI from "../../../BooksAPI";
-import BookList from "../../commonComponents/BookList";
+import BookList from "../../commonComponents/bookList";
 import { Link } from "react-router-dom";
-import { createHashHistory } from "history";
 import { withRouter } from "react-router-dom";
-
-export const history = createHashHistory();
 
 class SearchPageContainer extends Component {
   state = {

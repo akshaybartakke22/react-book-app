@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import BookList from "../../commonComponents/BookList";
+import BookList from "../../commonComponents/bookList";
 import { Link } from "react-router-dom";
 
 class HomePageContainer extends Component {
